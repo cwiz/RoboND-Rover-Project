@@ -108,14 +108,15 @@ def perception_step(Rover):
     wo = perspect_transform(o, source, destination)
 
     # Perform rotation
-    ag = adjust_warped(wg) * self.mask
-    ays = adjust_warped(wys) * self.mask
-    ao = adjust_warped(wo) * self.mask
+    mask = vision_mask()
+    ag = adjust_warped(wg) * mask
+    ays = adjust_warped(wys) * mask
+    ao = adjust_warped(wo) * mask
     
     # Ground Map
-    wmg = self.convert_from_rover_frame_to_world_frame(ag, x, y, yaw)
-    wmys = self.convert_from_rover_frame_to_world_frame(ays, x, y, yaw)
-    wmo = self.convert_from_rover_frame_to_world_frame(ao, x, y, yaw)
+    wmg = convert_from_rover_frame_to_world_frame(ag, x, y, yaw)
+    wmys = convert_from_rover_frame_to_world_frame(ays, x, y, yaw)
+    wmo = convert_from_rover_frame_to_world_frame(ao, x, y, yaw)
     
     Rover.worldmap[:,:,0] += wmo
     Rover.worldmap[:,:,1] += wmys
