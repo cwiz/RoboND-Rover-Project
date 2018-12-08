@@ -26,7 +26,7 @@ from supporting_functions import update_rover, create_output_images
 sio = socketio.Server()
 app = Flask(__name__)
 
-# Read in ground truth map and create 3-channel green version for overplotting
+# Read in ground truth map and create ri    3-channel green version for overplotting
 # NOTE: images are read in by default with the origin (0, 0) in the upper left
 # and y-axis increasing downward.
 ground_truth = mpimg.imread('../calibration_images/map_bw.png')
@@ -91,6 +91,8 @@ fps = None
 # Define telemetry function for what to do with incoming data
 @sio.on('telemetry')
 def telemetry(sid, data):
+
+    print("!!!")
 
     global frame_counter, second_counter, fps
     frame_counter+=1
