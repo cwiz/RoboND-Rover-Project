@@ -53,9 +53,18 @@ def rotate_pix(xpix, ypix, yaw):
     ypix_rotated = (xpix * np.sin(yaw_rad)) + (ypix * np.cos(yaw_rad)) 
     return xpix_rotated, ypix_rotated
 
-def perspect_transform(img, src, dst):   
+def perspect_transform(img, src, dst):
+    dst_size = 5 
+    bottom_offset = 6
+
+    src = np.float32([[14, 140], [301 ,140],[200, 96], [118, 96]])
+    dst = np.float32([[img.shape[1]/2 - dst_size, img.shape[0] - bottom_offset],
+        [img.shape[1]/2 + dst_size, img.shape[0] - bottom_offset],
+        [img.shape[1]/2 + dst_size, img.shape[0] - 2*dst_size - bottom_offset], 
+        [img.shape[1]/2 - dst_size, img.shape[0] - 2*dst_size - bottom_offset],
+        ])   
     M = cv2.getPerspectiveTransform(src, dst)
-    warped = cv2.warpPerspective(img, M, (img.shape[1], img.shape[0]))# keep same size as input image
+    warped = cv2.warpPerspective(img, M, (img.shape[1], img.shape[0]))
     return warped
 
 # Rover Visibility Mask
@@ -103,9 +112,9 @@ def perception_step(Rover):
     Rover.vision_image[:, :, 2] = g
 
     # Perform perspective transform
-    wg = perspect_transform(g, source, destination)
-    wys = perspect_transform(ys, source, destination)
-    wo = perspect_transform(o, source, destination)
+    wg = perspect_transform(g)
+    wys = perspect_transform(ys)
+    wo = perspect_transform(o)
 
     # Perform rotation
     mask = vision_mask()
