@@ -91,9 +91,6 @@ fps = None
 # Define telemetry function for what to do with incoming data
 @sio.on('telemetry')
 def telemetry(sid, data):
-
-    print("!!!")
-
     global frame_counter, second_counter, fps
     frame_counter+=1
     # Do a rough calculation of frames per second (FPS)
