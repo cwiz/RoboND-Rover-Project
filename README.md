@@ -14,7 +14,7 @@ This functions as follows:
 
 * We recieve a camera image, and x, y coordinates along with global yaw angle from a rover
 * We use vision segmentation and perspective transform to build a navigable map of environment
-* We use decision tree to generate router commands based
+* We use decision tree to generate router commands
 
 ### Results
 
